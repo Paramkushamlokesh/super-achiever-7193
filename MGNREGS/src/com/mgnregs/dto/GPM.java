@@ -8,6 +8,18 @@ public class GPM {
 	private String password;
 	private String email;
 	private String phone;
+	public GPM() {}
+	
+	public GPM(int gPM_ID, String username) {
+		GPM_ID = gPM_ID;
+		this.username = username;
+	}
+
+	public GPM(String username, String email, String phone) {
+		this.username = username;
+		this.email = email;
+		this.phone = phone;
+	}
 	public GPM(String username, String password, String email, String phone) {
 		this.username = username;
 		this.password = password;
@@ -21,7 +33,12 @@ public class GPM {
 		this.email = email;
 		this.phone = phone;
 	}
-	
+	public GPM(int gPM_ID, String username,String email, String phone) {
+		GPM_ID = gPM_ID;
+		this.username = username;
+		this.email = email;
+		this.phone = phone;
+	}
 	public int getGPM_ID() {
 		return GPM_ID;
 	}
@@ -69,8 +86,10 @@ public class GPM {
 	}
 	@Override
 	public String toString() {
-		return "GPM [GPM_ID=" + GPM_ID + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", phone=" + phone + "]\n";
+		if(password==null) {
+			return "GPM_ID=" + GPM_ID + ", username=" + username +", email=" + email+ ", phone=" + phone + "]\n";
+		}
+		return "GPM_ID=" + GPM_ID + ", username=" + username +", password=" + password + ", email=" + email+ ", phone=" + phone + "]\n";
 	}
 	
 }

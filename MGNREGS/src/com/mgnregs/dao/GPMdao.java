@@ -1,0 +1,36 @@
+package com.mgnregs.dao;
+
+import java.util.List;
+import java.util.Scanner;
+
+import com.mgnregs.Exception.MGNREGSException;
+import com.mgnregs.dto.AllEmp;
+import com.mgnregs.dto.Employee;
+
+public interface GPMdao { 
+	/**
+	 * Create Employee.
+	 * @return String statement
+	 */
+	String CreateEmployee(Scanner sc);
+	/**
+	 * View the Details of Employee.
+	 * @return Employee
+	 * @throws MGNREGSException 
+	 */
+	Employee getEmployeeDetails(Scanner sc) throws MGNREGSException;
+	/**
+	 * Assign Employee to a Project
+	 * @return
+	 */
+	String AssignEmployeetoProject(Scanner sc);
+	/**
+	 * View total number of days Employee worked in a project and also their wages.
+	 * @return list of employee data
+	 * @throws MGNREGSException 
+	 */
+	List<AllEmp> getEmployeesStatus(int id) throws MGNREGSException;
+	
+	
+
+}

@@ -53,8 +53,8 @@ public class Project {
 	}
 	@Override
 	public String toString() {
-		return "Project [project_id=" + project_id + ", project_name=" + project_name + ", project_location="
-				+ project_location + ", Start_date=" + Start_date + ", End_date=" + End_date + "]\n";
+		return "project_id=" + project_id + ", project_name=" + project_name + ", project_location="
+				+ project_location + ", Start_date=" + Start_date + ", End_date=" + End_date + "\n";
 	}
 	
 	

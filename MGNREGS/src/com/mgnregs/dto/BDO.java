@@ -24,6 +24,10 @@ public class BDO {
 		this.phone = phone;
 	}
 	
+	public BDO(int bDO_ID, String username) {
+		BDO_ID = bDO_ID;
+		this.username = username;
+	}
 	public int getBDO_ID() {
 		return BDO_ID;
 	}
