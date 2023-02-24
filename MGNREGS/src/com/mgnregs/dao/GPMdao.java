@@ -12,18 +12,18 @@ public interface GPMdao {
 	 * Create Employee.
 	 * @return String statement
 	 */
-	String CreateEmployee(Scanner sc);
+	String CreateEmployee(String[] arr);
 	/**
 	 * View the Details of Employee.
 	 * @return Employee
 	 * @throws MGNREGSException 
 	 */
-	Employee getEmployeeDetails(Scanner sc) throws MGNREGSException;
+	Employee getEmployeeDetails(int id) throws MGNREGSException;
 	/**
 	 * Assign Employee to a Project
 	 * @return
 	 */
-	String AssignEmployeetoProject(Scanner sc);
+	String AssignEmployeetoProject(String[] arr);
 	/**
 	 * View total number of days Employee worked in a project and also their wages.
 	 * @return list of employee data

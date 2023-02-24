@@ -15,7 +15,7 @@ public interface BDOdao {
 	 * @param sc 
 	 * @return
 	 */
-	String Createproject(Scanner sc);
+	String Createproject(String[] arr);
 	/**
 	 * 
 	 * @return
@@ -26,7 +26,7 @@ public interface BDOdao {
 	 * 
 	 * @return
 	 */
-	String CreateGPM(Scanner sc);
+	String CreateGPM(String[] arr);
 	/**
 	 * 
 	 * @return
@@ -37,12 +37,12 @@ public interface BDOdao {
 	 * 
 	 * @return
 	 */
-	String AllocateProjecttoGPM(Scanner sc);
+	String AllocateProjecttoGPM(String[] arr);
 	/**
 	 * working on that Project and their wages.
 	 * 
 	 * @return list of Employee
 	 */
-	List<AllEmp> ListoEmployee(Scanner sc) throws  MGNREGSException; 
+	List<AllEmp> ListoEmployee(int id) throws  MGNREGSException; 
 
 }

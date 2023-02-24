@@ -20,14 +20,14 @@ import com.mgnregs.dto.workerslog;
 public class GPMdaoimpl implements GPMdao {
 
 	@Override
-	public String CreateEmployee(Scanner sc) {
+	public String CreateEmployee(String[] arr) {
 		// TODO Auto-generated method stub
 		Connection con= DbConnect.connecttodb();
 		String sout="Oops insertion failed";
 		System.out.println("Enter <name phone typeofwork>");
-		String name =sc.next();
-		String phone =sc.next();
-		int type=sc.nextInt();
+		String name =arr[0];
+		String phone =arr[1];
+		int type=Integer.parseInt(arr[2]);
 
 		String q="insert into Employee (emp_name,emp_phone,emp_type) values (?,?,?)";
 		try {
@@ -49,10 +49,9 @@ public class GPMdaoimpl implements GPMdao {
 	}
 
 	@Override
-	public Employee getEmployeeDetails(Scanner sc) throws  MGNREGSException {
+	public Employee getEmployeeDetails(int id) throws  MGNREGSException {
 		// TODO Auto-generated method stub
-		System.out.println("Enter employee id no");
-		int id=sc.nextInt();
+		
 		Connection con= DbConnect.connecttodb();
 		Employee sout=null;
 		String q="select * from employee where emp_id=?";
@@ -79,21 +78,18 @@ public class GPMdaoimpl implements GPMdao {
 	}
 
 	@Override
-	public String AssignEmployeetoProject(Scanner sc) {
+	public String AssignEmployeetoProject(String[] arr) {
 		// TODO Auto-generated method stub
 		Connection con= DbConnect.connecttodb();
 		String sout="Oops insertion failed";
-		System.out.println("Enter <emp_id, project_id , Start_date(yy-mm-dd)>");
-		int e_id=sc.nextInt();
-		int p_id=sc.nextInt();
-		String date=sc.next();
+		
 
 		String q="insert into workerslog (emp_id,project_id,Start_date) values (?,?,?)";
 		try {
 			PreparedStatement ps=con.prepareStatement(q);
-			ps.setInt(1, e_id);
-			ps.setInt(2, p_id);
-			ps.setString(3, date);
+			ps.setInt(1, Integer.parseInt(arr[0]));
+			ps.setInt(2, Integer.parseInt(arr[1]));
+			ps.setString(3, arr[2]);
 			int ans=ps.executeUpdate();
 			if(ans>0) {
 				sout="Employee assigined to project Sucessfull";

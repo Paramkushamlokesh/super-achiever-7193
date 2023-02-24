@@ -22,14 +22,14 @@ import com.mgnregs.dto.workerslog;
 public class BDOdaoimpl implements BDOdao {
 
 	@Override
-	public String Createproject(Scanner sc) {
+	public String Createproject(String[] arr) {
 		// TODO Auto-generated method stub
 		Connection con= DbConnect.connecttodb();
 		String sout="Oops insertion failed";
-		System.out.println("Enter <name location date>");
-		String name =sc.next();
-		String location =sc.next();
-		String start_date =sc.next();
+//		System.out.println("Enter <name location date>");
+		String name =arr[0];
+		String location =arr[1];
+		String start_date =arr[2];
 		String end_date =LocalDate.parse(start_date).plusDays(100).toString();
 		String q="insert into project (project_name,project_location,Start_date,End_date) values (?,?,?,?)";
 		try {
@@ -78,15 +78,15 @@ public class BDOdaoimpl implements BDOdao {
 	}
 
 	@Override
-	public String CreateGPM(Scanner sc) {
+	public String CreateGPM(String[] arr) {
 		// TODO Auto-generated method stub
 		Connection con= DbConnect.connecttodb();
 		String sout="Oops insertion failed";
-		System.out.println("Enter <username password email phone>");
-		String username =sc.next();
-		String password =sc.next();
-		String email =sc.next();
-		String phone =sc.next();
+//		System.out.println("Enter <username password email phone>");
+		String username =arr[0];
+		String password =arr[1];
+		String email =arr[2];
+		String phone =arr[3];
 		String q="insert into GPM (username,password,email,phone) values (?,?,?,?)";
 		try {
 			PreparedStatement ps=con.prepareStatement(q);
@@ -134,13 +134,13 @@ public class BDOdaoimpl implements BDOdao {
 	}
 
 	@Override
-	public String AllocateProjecttoGPM(Scanner sc) {
+	public String AllocateProjecttoGPM(String[] arr) {
 		// TODO Auto-generated method stub
 		Connection con= DbConnect.connecttodb();
 		String sout="Oops allocation failed";
-		System.out.println("Enter GPM_id-->Project_id");
-		int gpm_id =sc.nextInt();
-		int pro_id =sc.nextInt();
+//		System.out.println("Enter GPM_id-->Project_id");
+		int gpm_id =Integer.parseInt(arr[0]);
+		int pro_id =Integer.parseInt(arr[1]);
 		
 		String q="insert into gpmtopro values (?,?)";
 		try {
@@ -161,13 +161,12 @@ public class BDOdaoimpl implements BDOdao {
 	}
 
 	@Override
-	public List<AllEmp> ListoEmployee(Scanner sc) throws  MGNREGSException{
+	public List<AllEmp> ListoEmployee(int id) throws  MGNREGSException{
 		// TODO Auto-generated method stub
 		String q="select * from  ocupation AB right join (select A.emp_id,emp_name,start_date,emp_type from workerslog A left join Employee B on A.emp_id=B.emp_id where project_id=?) BC on AB.ocupation_id=BC.emp_type";
 		Connection con= DbConnect.connecttodb();
 		List<AllEmp> sout=new ArrayList<>();
-		System.out.println("Enter project Id");
-		int id=sc.nextInt();
+//		System.out.println("Enter project Id");
 		try {
 			PreparedStatement ps=con.prepareStatement(q);
 			ps.setInt(1, id);
