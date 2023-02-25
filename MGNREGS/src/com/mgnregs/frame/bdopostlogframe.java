@@ -1,13 +1,18 @@
 package com.mgnregs.frame;
 
+import java.util.List;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dao.BDOdao;
 import com.mgnregs.dao.BDOdaoimpl;
 import com.mgnregs.dto.BDO;
+import com.mgnregs.dto.Project;
 
 public class bdopostlogframe {
 JFrame jf;
@@ -25,6 +30,9 @@ JFrame jf;
 	
 	bdopostlogframe(BDO bdo){
 		jf=new JFrame();
+		
+		ImageIcon ico=new ImageIcon("MNNREGS_LOGO.png");
+		jf.setIconImage(ico.getImage());
 		
 		but1.setBounds(100, 50, 400, 50);
 		but2.setBounds(100, 110, 400, 50);
@@ -52,23 +60,24 @@ JFrame jf;
 			postbutt.addActionListener(w->{
 				String ans=smsg.getText();
 				String[] arr=ans.split(" ");
-				
-				System.out.println(o.Createproject(arr));
+				JOptionPane.showMessageDialog(null,o.Createproject(arr));
+				//System.out.println(o.Createproject(arr));
 			});
 			
 			
 		});
 		but2.addActionListener(e->{
-			System.out.println("butt2");
-			postbutt.addActionListener(w->{
-				int id=Integer.parseInt(smsg.getText());
-				try {
-					System.out.println(o.ListOfProject());
-				} catch (MGNREGSException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			});
+			try {
+				List<Project> str=o.ListOfProject();
+				//System.out.println(str);
+				StringBuilder sb=new StringBuilder();
+				str.stream().forEach(s->sb.append(s));
+				JOptionPane.showMessageDialog(null,sb.toString());
+//				System.out.println(o.ListOfProject());
+			} catch (MGNREGSException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null,e1.getLocalizedMessage());
+			}
 		});
 		but3.addActionListener(e->{
 			System.out.println("butt3");
@@ -78,15 +87,15 @@ JFrame jf;
 			postbutt.addActionListener(w->{
 				String ans=smsg.getText();
 				String[] arr=ans.split(" ");
-				System.out.println(o.CreateGPM(arr));
+				JOptionPane.showMessageDialog(null,o.CreateGPM(arr));
 			});
 		});
 		but4.addActionListener(e->{
 			System.out.println("butt4");
 			try {
-				System.out.println(o.ViewallGPM());
+				JOptionPane.showMessageDialog(null,o.ViewallGPM());
 			} catch (MGNREGSException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null,e1.getLocalizedMessage());
 			}
 		});
 		but5.addActionListener(e->{
@@ -97,8 +106,7 @@ JFrame jf;
 			postbutt.addActionListener(w->{
 				String ans=smsg.getText();
 				String[] arr=ans.split(" ");
-				System.out.println(o.AllocateProjecttoGPM(arr));
-
+				JOptionPane.showMessageDialog(null,o.AllocateProjecttoGPM(arr));
 			});
 		});
 		but6.addActionListener(e->{
@@ -110,9 +118,11 @@ JFrame jf;
 				
 				int id=Integer.parseInt(smsg.getText());
 				try {
-					o.ListoEmployee(id).stream().forEach(s->System.out.println(s));
+					StringBuilder sb=new StringBuilder();
+					o.ListoEmployee(id).stream().forEach(s->sb.append(s));
+					JOptionPane.showMessageDialog(null,sb.toString());
 				} catch (MGNREGSException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null,e1.getLocalizedMessage());
 				}
 
 			});

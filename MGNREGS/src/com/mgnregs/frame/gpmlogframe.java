@@ -2,14 +2,16 @@ package com.mgnregs.frame;
 
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dto.GPM;
-import com.mgnregs.gui.Secsiongui;
 import com.mgnregs.loginverification.Login;
 import com.mgnregs.loginverification.Loginimpl;
 
@@ -25,6 +27,9 @@ public class gpmlogframe {
 	
 	public gpmlogframe(){
 		jf=new JFrame("MGNREGS GPM");
+		
+		ImageIcon ico=new ImageIcon("MNNREGS_LOGO.png");
+		jf.setIconImage(ico.getImage());
 		
 		
 		userlable.setBounds(50, 100, 75,25);
@@ -53,18 +58,25 @@ public class gpmlogframe {
 			
 			Login log1=new Loginimpl();
 			
-			GPM gpm=log1.verifyGPMlogin(user,pass);
-			if(gpm!=null){
-				System.out.println("login successful");
-				jf.dispose();
-				gpmpostlogframe bdopostlog =new gpmpostlogframe(gpm);
-				//Secsiongui.GPMPostlog(new Scanner(System.in),gpm);
-			}
-			else {
-				System.out.println("login failed");
+			GPM gpm=null;
+			try {
+				gpm = log1.verifyGPMlogin(user,pass);
+				if(gpm!=null){
+					jf.dispose();
+					JOptionPane.showMessageDialog(null, "login successful");
+					gpmpostlogframe bdopostlog =new gpmpostlogframe(gpm);
+					//Secsiongui.GPMPostlog(new Scanner(System.in),gpm);
+				}
+			} catch (MGNREGSException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null,e1.getLocalizedMessage());
+
 			}
 		});
-		
+		resetbut.addActionListener((e)->{
+			userTextField.setText("");
+			PasswordField.setText("");
+		});
 		
 	}
 }

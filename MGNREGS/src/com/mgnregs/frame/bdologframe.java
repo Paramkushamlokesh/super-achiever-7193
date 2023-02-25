@@ -1,11 +1,14 @@
 package com.mgnregs.frame;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dto.BDO;
 import com.mgnregs.loginverification.Login;
 import com.mgnregs.loginverification.Loginimpl;
@@ -19,10 +22,15 @@ public class bdologframe{
 	JLabel passwordlable=new JLabel("Password :");
 	JTextField userTextField=new JTextField();
 	JPasswordField PasswordField=new JPasswordField();
-	
+
 	
 	public bdologframe(){
 		jf=new JFrame("MGNREGS BDO");
+		
+			ImageIcon ico=new ImageIcon("MNNREGS_LOGO.png");
+			jf.setIconImage(ico.getImage());
+			
+		
 		
 		
 		userlable.setBounds(50, 100, 75,25);
@@ -36,6 +44,7 @@ public class bdologframe{
 		jf.setSize(420,420);
 		jf.setLayout(null);
 		jf.setVisible(true);
+		
 		
 		 jf.add(userlable);
 		 jf.add(passwordlable);
@@ -51,33 +60,25 @@ public class bdologframe{
 			
 			Login log1=new Loginimpl();
 			
-			BDO bdo=log1.verifyBDOlogin(user,pass);
-			if(bdo!=null){
-				System.out.println("login successful");
-				jf.dispose();
-				bdopostlogframe bdoframe=new bdopostlogframe(bdo);
-				//Secsiongui.BDOPostlog(new Scanner(System.in),dbo);
+			BDO bdo=null;
+			try {
+				bdo = log1.verifyBDOlogin(user,pass);
+				if(bdo!=null){
+					jf.dispose();
+					JOptionPane.showMessageDialog(null, "login successful");
+					bdopostlogframe bdoframe=new bdopostlogframe(bdo);
+					//Secsiongui.BDOPostlog(new Scanner(System.in),dbo);
+				}
+			} catch (MGNREGSException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, e1.getLocalizedMessage());
 			}
-			else {
-				System.out.println("login failed");
-			}
+
+		});
+		resetbut.addActionListener((e)->{
+			userTextField.setText("");
+			PasswordField.setText("");
 		});
 		
-		
 	}
-	
-	
-	
-	//tfu.setBounds(125, 100,200,25);
-	//userlable.setBounds(20, 50, 350, 50);
-	//JLabel userlable=new JLabel("Username");
-//	JButton loginbut=new JButton("Login");
-//	loginbut.setBounds(50, 100, 60, 50);
-//	loginbut.addActionListener(e->{
-//		
-//	});
-	//jf.add(userlable);
-	//jf.add(loginbut);
-	
-
 }

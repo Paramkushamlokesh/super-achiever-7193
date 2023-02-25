@@ -10,12 +10,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dbconnections.DbConnect;
 import com.mgnregs.dto.BDO;
 import com.mgnregs.dto.GPM;
 
-public class Loginimpl implements Login{
-	public BDO verifyBDOlogin(String user,String pass) {
+public class Loginimpl implements Login {
+	public BDO verifyBDOlogin(String user,String pass)throws MGNREGSException {
 		
 		Connection con=DbConnect.connecttodb();
 		BDO sout=null;
@@ -25,12 +26,16 @@ public class Loginimpl implements Login{
 			ps.setString(1, user);
 			ResultSet rs=ps.executeQuery();
 			if(!rs.isBeforeFirst()&&rs.getRow()==0) {
-				
+				throw new MGNREGSException("No Records found");
 			}
 			else {
 				rs.next();
 				if(rs.getString("password").equals(pass)) {
 					sout=new BDO(rs.getInt("BDO_ID"),rs.getString("username"));
+				}
+				else {
+					throw new MGNREGSException("Wrong password");
+					
 				}
 			}
 		} catch (SQLException e) {
@@ -68,7 +73,7 @@ public class Loginimpl implements Login{
 //				return sout;	
 	
 	}
-	public GPM verifyGPMlogin(String user,String pass) {
+	public GPM verifyGPMlogin(String user,String pass) throws MGNREGSException{
 		
 		Connection con=DbConnect.connecttodb();
 		GPM sout=null;
@@ -78,12 +83,16 @@ public class Loginimpl implements Login{
 			ps.setString(1, user);
 			ResultSet rs=ps.executeQuery();
 			if(!rs.isBeforeFirst()&&rs.getRow()==0) {
-				
+				throw new MGNREGSException("NO Records Found");
 			}
 			else {
 				rs.next();
 				if(rs.getString("password").equals(pass)) {
 					sout=new GPM(rs.getInt("GPM_ID"),rs.getString("username"));
+				}
+				else {
+					throw new MGNREGSException("Wrong password");
+
 				}
 			}
 		} catch (SQLException e) {

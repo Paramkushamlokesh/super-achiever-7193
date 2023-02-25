@@ -30,6 +30,12 @@ public interface GPMdao {
 	 * @throws MGNREGSException 
 	 */
 	List<AllEmp> getEmployeesStatus(int id) throws MGNREGSException;
+	/**
+	 * 
+	 * @return string
+	 * @throws MGNREGSException
+	 */
+	List<String> getAllEmployeeDetails()throws MGNREGSException;
 	
 	
 

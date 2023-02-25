@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dbconnections.DbConnect;
@@ -38,6 +37,7 @@ public class GPMdaoimpl implements GPMdao {
 
 			int ans=ps.executeUpdate();
 			if(ans>0) {
+				
 				sout="Employee created Sucessfull";
 			}
 		} catch (SQLException e) {
@@ -130,6 +130,32 @@ public class GPMdaoimpl implements GPMdao {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DbConnect.closeconnection(con);
+		return sout;
+	}
+
+	@Override
+	public List<String> getAllEmployeeDetails() throws MGNREGSException {
+		String q="select A.emp_id,emp_name,project_id from employee A left join workerslog B on A.emp_id=B.emp_id";
+		Connection con= DbConnect.connecttodb();
+		List<String> sout=new ArrayList<>();
+		try {
+			PreparedStatement ps=con.prepareStatement(q);
+			ResultSet rs=ps.executeQuery();
+			if(!rs.isBeforeFirst()&&rs.getRow()==0) {
+				throw new MGNREGSException("No Records");
+			}
+			else {
+				while(rs.next()) {
+					
+					sout.add(rs.getInt("emp_id")+"  "+rs.getString("emp_name")+"  "+((rs.getInt("project_id")==0)?"Free":"Active")+"\n");
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("asdfghjklsdfghjksdfghjk");
 			e.printStackTrace();
 		}
 		DbConnect.closeconnection(con);
