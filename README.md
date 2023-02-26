@@ -10,7 +10,7 @@ connected therewith or incidental thereto
 <p>Functioning Implementations</p>
 A project is created by BDO. Project is where people are assigned to. Before assigning anybody to a project(done by Gram Panchayat member) his/her data must be inserted into the system.
 
-<p>Database Tables</p>
+<p>-Database Tables</p>
 
 
 ![image](https://user-images.githubusercontent.com/102058969/221403833-4d83e1f6-03c1-41ac-a591-774e88a571ee.png)
