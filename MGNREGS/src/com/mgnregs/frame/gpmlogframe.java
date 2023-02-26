@@ -65,7 +65,7 @@ public class gpmlogframe {
 					jf.dispose();
 					JOptionPane.showMessageDialog(null, "login successful");
 					gpmpostlogframe bdopostlog =new gpmpostlogframe(gpm);
-					//Secsiongui.GPMPostlog(new Scanner(System.in),gpm);
+					
 				}
 			} catch (MGNREGSException e1) {
 				// TODO Auto-generated catch block

@@ -1,15 +1,20 @@
 package com.mgnregs.frame;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dao.GPMdao;
 import com.mgnregs.dao.GPMdaoimpl;
+import com.mgnregs.dbconnections.DbConnect;
 import com.mgnregs.dto.GPM;
 
 public class gpmpostlogframe {
@@ -31,6 +36,33 @@ public class gpmpostlogframe {
 	
 	gpmpostlogframe(GPM gpm){
 		jf=new JFrame();
+		Connection con=DbConnect.connecttodb();
+		String q="Select * from gpmtopro where GPM_ID=?";
+		PreparedStatement ps;
+		int sin=0;
+		try {
+			ps = con.prepareStatement(q);
+			ps.setInt(1, gpm.getGPM_ID());
+			ResultSet rs=ps.executeQuery();
+			
+			if(!rs.isBeforeFirst()&&rs.getRow()==0) {
+				
+			}
+			else {
+				rs.next();
+				sin=rs.getInt("Project_id");
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		DbConnect.closeconnection(con);
+		jf.setTitle(gpm.getUsername()+" "+gpm.getGPM_ID()+((sin==0)?"project-> Inactive":"--> project-id "+sin));
+		
+		if(sin==0) {
+			but3.setEnabled(false);
+		}
 		
 		ImageIcon ico=new ImageIcon("MNNREGS_LOGO.png");
 		jf.setIconImage(ico.getImage());
@@ -72,7 +104,6 @@ public class gpmpostlogframe {
 						});
 					JOptionPane.showMessageDialog(null,sb.toString());
 				} catch (MGNREGSException e1) {
-					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null,e1.getLocalizedMessage());
 				}
 			

@@ -1,5 +1,10 @@
 package com.mgnregs.frame;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -11,7 +16,9 @@ import javax.swing.JTextField;
 import com.mgnregs.Exception.MGNREGSException;
 import com.mgnregs.dao.BDOdao;
 import com.mgnregs.dao.BDOdaoimpl;
+import com.mgnregs.dbconnections.DbConnect;
 import com.mgnregs.dto.BDO;
+import com.mgnregs.dto.GPM;
 import com.mgnregs.dto.Project;
 
 public class bdopostlogframe {
@@ -30,6 +37,7 @@ JFrame jf;
 	
 	bdopostlogframe(BDO bdo){
 		jf=new JFrame();
+		jf.setTitle(bdo.getUsername());
 		
 		ImageIcon ico=new ImageIcon("MNNREGS_LOGO.png");
 		jf.setIconImage(ico.getImage());
@@ -67,11 +75,39 @@ JFrame jf;
 			
 		});
 		but2.addActionListener(e->{
+			
+			Connection con=DbConnect.connecttodb();
+			
+			String q="select * from gpmtopro";
+			List<Integer> gpmids=new ArrayList<>();
+			List<Integer> proids=new ArrayList<>();
+			try {
+				Statement  st=con.createStatement();
+				ResultSet rs=st.executeQuery(q);
+				if(!rs.isBeforeFirst()&&rs.getRow()==0) {
+					
+				}
+				else {
+					while(rs.next()) {
+						gpmids.add(rs.getInt("GPM_ID"))	;
+						proids.add(rs.getInt("Project_id"))	;
+					}
+				}
+				
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			DbConnect.closeconnection(con);
+			
 			try {
 				List<Project> str=o.ListOfProject();
 				//System.out.println(str);
 				StringBuilder sb=new StringBuilder();
-				str.stream().forEach(s->sb.append(s));
+				str.stream().forEach(s->{
+					sb.append(s+((proids.contains(s.getProject_id())?"actice \n":"Inactive \n")));
+					});
 				JOptionPane.showMessageDialog(null,sb.toString());
 //				System.out.println(o.ListOfProject());
 			} catch (MGNREGSException e1) {
@@ -92,8 +128,37 @@ JFrame jf;
 		});
 		but4.addActionListener(e->{
 			System.out.println("butt4");
+Connection con=DbConnect.connecttodb();
+			
+			String q="select * from gpmtopro";
+			List<Integer> gpmids=new ArrayList<>();
+			List<Integer> proids=new ArrayList<>();
 			try {
-				JOptionPane.showMessageDialog(null,o.ViewallGPM());
+				Statement  st=con.createStatement();
+				ResultSet rs=st.executeQuery(q);
+				if(!rs.isBeforeFirst()&&rs.getRow()==0) {
+					
+				}
+				else {
+					while(rs.next()) {
+						gpmids.add(rs.getInt("GPM_ID"))	;
+						proids.add(rs.getInt("Project_id"))	;
+					}
+				}
+				
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			DbConnect.closeconnection(con);
+			try {
+				List<GPM>str=o.ViewallGPM();
+				StringBuilder sb=new StringBuilder();
+				str.stream().forEach(s->{
+					sb.append(s+((gpmids.contains(s.getGPM_ID())?"actice \n":"Inactive \n")));
+					});
+				JOptionPane.showMessageDialog(null,sb.toString());
 			} catch (MGNREGSException e1) {
 				JOptionPane.showMessageDialog(null,e1.getLocalizedMessage());
 			}
